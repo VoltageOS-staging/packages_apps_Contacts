@@ -216,6 +216,9 @@ public class DrawerFragment extends Fragment implements AccountsListener {
     @Override
     public void onResume() {
         super.onResume();
+
+        AccountsLoader.reloadAccounts(this, LOADER_ACCOUNTS,
+                AccountTypeManager.groupInsertableFilter(getActivity()));
         // todo double check on the new Handler() thing
         final Uri uri = ObjectFactory.getWelcomeUri();
         if (uri != null) {
@@ -242,8 +245,6 @@ public class DrawerFragment extends Fragment implements AccountsListener {
 
     private void loadGroupsAndFilters() {
         getLoaderManager().initLoader(LOADER_FILTERS, null, mFiltersLoaderListener);
-        AccountsLoader.loadAccounts(this, LOADER_ACCOUNTS,
-                AccountTypeManager.AccountFilter.GROUPS_WRITABLE);
         getLoaderManager().initLoader(LOADER_GROUPS, null, mGroupListLoaderListener);
         getLoaderManager().initLoader(LOADER_PROFILE, null, mProfileLoaderListener);
     }
